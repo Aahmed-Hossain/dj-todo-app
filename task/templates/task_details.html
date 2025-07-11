@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card p-5 container">
+  <h2>{{ task.title }}</h2>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+  <p><strong>Status:</strong> {{ task.status }}</p>
+  <p><strong>Category:</strong> {{ task.category }}</p>
+  <p><strong>Completed:</strong> {{ task.is_completed|yesno:"Yes,No" }}</p>
+
+  <a href="{% url 'task_lists' %}" class="btn btn-secondary" style="width: 80px;">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.env
+*.log
+
+# Virtual Envs
+env/
+.venv/
+venv/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code or JetBrains IDEs
+.vscode/
+.idea/
+
+# Deployment
+build.sh~
+*.bak
+*.swp
+
+# Environment and secrets
+.env
+.env.local
+secrets.json

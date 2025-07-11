@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Your Tasks</h2>
+    <a href="{% url 'task_create' %}" class="btn btn-success">+ Create Task</a>
+  </div>
+
+  <!-- Filters -->
+  <form method="get" class="row mb-4">
+    <div class="col-md-3">
+      <select name="status" class="form-select">
+        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Status</option>
+        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="category" class="form-select">
+        <option value="all" {% if category_filter == 'all' %}selected{% endif %}>All Categories</option>
+        <option value="work" {% if category_filter == 'work' %}selected{% endif %}>Work</option>
+        <option value="personal" {% if category_filter == 'personal' %}selected{% endif %}>Personal</option>
+        <option value="others" {% if category_filter == 'others' %}selected{% endif %}>Others</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+  </form>
+
+  <!-- Pending Tasks -->
+  <h4 class="mt-4">Pending Tasks</h4>
+  {% for task in pending_task %}
+    <div class="card mb-2">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="card-title">{{ task.title }}</h5>
+          <p class="card-text"><strong>Due:</strong> {{ task.due_date }} | <strong>Category:</strong> {{ task.category }}</p>
+        </div>
+        <div>
+          <a href="{% url 'task_mark_completed' task.id %}" class="btn btn-outline-success btn-sm">Mark Completed</a>
+          <a href="{% url 'task_details' task.id %}" class="btn btn-outline-info btn-sm">View</a>
+          <a href="{% url 'task_update' task.id %}" class="btn btn-outline-primary btn-sm">Update</a>
+          <a href="{% url 'task_delete' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No pending tasks.</p>
+  {% endfor %}
+
+  <!-- Completed Tasks -->
+  <h4 class="mt-5">Completed Tasks</h4>
+  {% for task in completed_tasks %}
+    <div class="card mb-2 bg-light">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="card-title text-decoration-line-through">{{ task.title }}</h5>
+          <p class="card-text"><strong>Due:</strong> {{ task.due_date }} | <strong>Category:</strong> {{ task.category }}</p>
+        </div>
+        <div>
+          <a href="{% url 'task_details' task.id %}" class="btn btn-outline-info btn-sm">View</a>
+          <a href="{% url 'task_update' task.id %}" class="btn btn-outline-primary btn-sm">Update</a>
+          <a href="{% url 'task_delete' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No completed tasks.</p>
+  {% endfor %}
+</div>
+{% endblock %}
